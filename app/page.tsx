@@ -1,6 +1,6 @@
 "use client";
 import { useState } from 'react';
-import { Camera, Sparkles, ShieldCheck, Zap, Copy } from 'lucide-react';
+import { Camera, Sparkles, ShieldCheck, Zap, Copy, ImagePlus } from 'lucide-react';
 
 export default function Home() {
   const [isScanning, setIsScanning] = useState(false);
@@ -131,18 +131,34 @@ export default function Home() {
 
           </div>
         ) : (
-          /* THE UPLOAD BUTTON */
-          <label className="cursor-pointer group flex flex-col items-center gap-4">
-            <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
-            <div className="w-24 h-24 rounded-full bg-slate-800/50 border border-slate-700 flex items-center justify-center group-hover:border-cyan-500/50 group-hover:bg-cyan-500/10 transition-all shadow-lg">
-              <Camera className="w-10 h-10 text-slate-500 group-hover:text-cyan-400" />
+          /* THE UPLOAD BUTTONS */
+          <div className="flex flex-col items-center w-full">
+            <div className="flex justify-center gap-8 mb-4">
+              
+              {/* Button 1: Live Camera */}
+              <label className="cursor-pointer group flex flex-col items-center gap-3">
+                {/* The 'capture' attribute forces the phone to open the camera */}
+                <input type="file" accept="image/*" capture="environment" className="hidden" onChange={handleFileChange} />
+                <div className="w-16 h-16 rounded-full bg-slate-800/50 border border-slate-700 flex items-center justify-center group-hover:border-cyan-500/50 group-hover:bg-cyan-500/10 transition-all shadow-lg">
+                  <Camera className="w-7 h-7 text-slate-500 group-hover:text-cyan-400" />
+                </div>
+                <span className="block text-slate-200 font-bold tracking-wide text-sm">Camera</span>
+              </label>
+
+              {/* Button 2: Photo Gallery */}
+              <label className="cursor-pointer group flex flex-col items-center gap-3">
+                <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+                <div className="w-16 h-16 rounded-full bg-slate-800/50 border border-slate-700 flex items-center justify-center group-hover:border-cyan-500/50 group-hover:bg-cyan-500/10 transition-all shadow-lg">
+                  <ImagePlus className="w-7 h-7 text-slate-500 group-hover:text-cyan-400" />
+                </div>
+                <span className="block text-slate-200 font-bold tracking-wide text-sm">Gallery</span>
+              </label>
+              
             </div>
-            <div className="text-center mt-2">
-              <span className="block text-slate-200 font-bold tracking-wide">Snap or Upload Chat</span>
-              <span className="text-slate-500 text-[10px] uppercase font-semibold mt-1 block">JPG, PNG, or HEIC</span>
-            </div>
-          </label>
+            <span className="text-slate-500 text-[10px] uppercase font-semibold">JPG, PNG, or HEIC</span>
+          </div>
         )}
+        
       </div>
 
       {/* --- BOTTOM SECTION --- */}
