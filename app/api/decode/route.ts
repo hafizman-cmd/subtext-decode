@@ -5,17 +5,25 @@ import { z } from 'zod';
 export async function POST(req: Request) {
   const { image } = await req.json();
 
+  // Define a single scenario structure
+  const InterpretationSchema = z.object({
+    title: z.string().describe("A short title, e.g., 'Scenario A: Annoyed' or 'Scenario B: Just Busy'"),
+    vibe: z.string().describe("The overall mood of the chat in this scenario"),
+    hidden_meaning: z.string().describe("What they are actually saying in this scenario"),
+    red_flags: z.array(z.string()).describe("Any passive-aggressive or mean parts in this scenario"),
+    replies: z.object({
+      shield: z.string().describe("A boundary-setting, safe response"),
+      bridge: z.string().describe("An empathetic, connecting, or vulnerable response"),
+      suit: z.string().describe("A professional, detached, or neutral response")
+    })
+  });
+
   const result = await generateObject({
     model: google('gemini-2.5-flash'),
     schema: z.object({
-      vibe: z.string().describe("The overall mood of the chat"),
-      hidden_meaning: z.string().describe("What they are actually saying"),
-      red_flags: z.array(z.string()).describe("Any passive-aggressive or mean parts"),
-      replies: z.object({
-        shield: z.string().describe("A boundary-setting, safe response"),
-        bridge: z.string().describe("An empathetic, connecting, or vulnerable response"),
-        suit: z.string().describe("A professional, detached, or neutral response")
-      }),
+      confidence_score: z.number().min(0).max(100).describe("Confidence rating from 0 to 100"),
+      reasoning: z.string().describe("A one-sentence explanation of why you gave this score"),
+      interpretations: z.array(InterpretationSchema).min(1).max(2).describe("Provide 1 interpretation if highly confident. Provide 2 distinctly different interpretations if the text is ambiguous or confidence is below 60.")
     }),
     messages: [
       {
@@ -26,19 +34,11 @@ export async function POST(req: Request) {
             text: `You are an expert in linguistics, emotional intelligence, neurodiversity-aware communication, and anxiety-sensitive analysis.
 
 Your task:
-1. Read the chat screenshot (provided as an image) **in the same language** that appears in the screenshot.
-2. Identify:
-   • The overall **vibe** / emotional temperature of the exchange.
-   • Any **hidden meaning** – what is really being communicated beneath the surface.
-   • **Red flags** – passive-aggressive, dismissive, hostile, or otherwise concerning utterances.
-   • **Power dynamics** – who is exerting influence, who is being marginalized, any status or authority cues.
-   • **Neurodiversity considerations** – look for atypical phrasing, literal vs. figurative language, need for predictability, sensory-overload hints, communication style mismatches, etc.
-   • **Anxiety indicators** – hedging, excessive apologizing, catastrophizing, requests for reassurance, physiological-type metaphors, avoidance, etc.
-3. Based on the above, craft three distinct reply styles that a responder could use:
-   • **shield** – a boundary-setting, safe reply that protects the speaker’s wellbeing while respecting neurodivergent communication needs.
-   • **bridge** – an empathetic, connecting, or vulnerable reply that invites openness and validates feelings.
-   • **suit** – a professional, detached, or neutral reply suitable for workplace or formal contexts.
-4. **ALWAYS** output your analysis and the three replies in the EXACT language used in the screenshot. Do not default to English unless the screenshot is in English.
+1. Read the chat screenshot **in the same language** that appears in the screenshot.
+2. Evaluate Confidence: If the text is clear, give a high confidence score (80-100) and provide ONE interpretation. If the text is short, ambiguous, or lacks context, give a low score (0-60) and provide TWO distinct interpretations (e.g., Scenario A: Negative/Upset, Scenario B: Neutral/Busy).
+3. For each interpretation, identify the vibe, hidden meaning, and any red flags.
+4. For each interpretation, craft three distinct replies (shield, bridge, suit) that match that specific scenario.
+5. **ALWAYS** output everything in the EXACT language used in the screenshot.
 
 Now, analyze the chat.` 
           },
