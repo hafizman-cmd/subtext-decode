@@ -11,6 +11,7 @@ export async function POST(req: Request) {
     vibe: z.string().describe("The overall mood of the chat in this scenario"),
     hidden_meaning: z.string().describe("What they are actually saying in this scenario"),
     red_flags: z.array(z.string()).describe("Any passive-aggressive or mean parts in this scenario"),
+    encouraging_quote: z.string().describe("A short, uplifting, and validating sentence to support the user emotionally in this scenario."),
     replies: z.object({
       shield: z.string().describe("A boundary-setting, safe response"),
       bridge: z.string().describe("An empathetic, connecting, or vulnerable response"),
@@ -38,7 +39,8 @@ Your task:
 2. Evaluate Confidence: If the text is clear, give a high confidence score (80-100) and provide ONE interpretation. If the text is short, ambiguous, or lacks context, give a low score (0-60) and provide TWO distinct interpretations (e.g., Scenario A: Negative/Upset, Scenario B: Neutral/Busy).
 3. For each interpretation, identify the vibe, hidden meaning, and any red flags.
 4. For each interpretation, craft three distinct replies (shield, bridge, suit) that match that specific scenario.
-5. **ALWAYS** output everything in the EXACT language used in the screenshot.
+5. For each interpretation, write ONE short, highly empathetic 'encouraging_quote' that validates the user's feelings and boosts their confidence based on the chat.
+6. **ALWAYS** output everything in the EXACT language used in the screenshot.
 
 Now, analyze the chat.` 
           },
