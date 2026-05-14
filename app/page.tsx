@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from 'react';
-import { Camera, Sparkles, ShieldCheck, Zap, Copy, ImagePlus, Clock, X, ChevronRight, Share2, Quote } from 'lucide-react';
+import { Camera, Sparkles, ShieldCheck, Zap, Copy, ImagePlus, Clock, X, ChevronRight, Share2, Quote, BookOpen } from 'lucide-react';
 
 export default function Home() {
   const [isScanning, setIsScanning] = useState(false);
@@ -402,6 +402,8 @@ export default function Home() {
 
       {/* BOTTOM SECTION */}
       <div className="w-full max-w-sm mt-8 space-y-4 pb-8">
+        
+        {/* The "About & Tech" Box */}
         <div className="bg-slate-900/40 p-4 rounded-2xl border border-slate-800 shadow-sm flex flex-col gap-4 transition-colors hover:border-slate-700/80">
           <div className="flex justify-center gap-8 pb-3 border-b border-slate-800/60">
             <div className="flex items-center gap-1.5">
@@ -420,11 +422,72 @@ export default function Home() {
             </p>
           </div>
         </div>
+
+        {/* Quick Guide */}
+        <div className="bg-slate-900/30 p-4 rounded-2xl border border-slate-800/50 transition-colors hover:border-cyan-900/50">
+          <p className="text-[10px] text-cyan-500 uppercase font-bold mb-4 tracking-widest text-center">Quick Guide</p>
+          <div className="flex justify-between items-start px-2">
+            <div className="flex flex-col items-center text-center gap-2 w-1/3">
+              <div className="w-7 h-7 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300 text-xs font-bold shadow-lg">1</div>
+              <p className="text-[10px] text-slate-400 uppercase font-semibold leading-tight">Snap or<br/>Upload</p>
+            </div>
+            <div className="w-8 h-[1px] bg-slate-800 mt-3 hidden sm:block"></div>
+            <div className="flex flex-col items-center text-center gap-2 w-1/3">
+              <div className="w-7 h-7 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300 text-xs font-bold shadow-lg">2</div>
+              <p className="text-[10px] text-slate-400 uppercase font-semibold leading-tight">AI Decodes<br/>Subtext</p>
+            </div>
+            <div className="w-8 h-[1px] bg-slate-800 mt-3 hidden sm:block"></div>
+            <div className="flex flex-col items-center text-center gap-2 w-1/3">
+              <div className="w-7 h-7 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300 text-xs font-bold shadow-lg">3</div>
+              <p className="text-[10px] text-slate-400 uppercase font-semibold leading-tight">Pick Your<br/>Reply</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Scientific Foundations */}
+        <div className="bg-slate-900/30 p-4 rounded-2xl border border-slate-800/50 transition-colors hover:border-indigo-900/50">
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <BookOpen className="w-4 h-4 text-indigo-400" />
+            <p className="text-[10px] text-indigo-400 uppercase font-bold tracking-widest text-center">Scientific Foundations</p>
+          </div>
+          
+          <div className="space-y-3">
+            {/* Research 1 */}
+            <div className="border-l-2 border-indigo-500/30 pl-3">
+              <p className="text-[10px] text-slate-300 font-bold uppercase tracking-wider mb-0.5">Double Empathy Problem</p>
+              <p className="text-[9px] text-slate-500 leading-relaxed">
+                Framing communication gaps as a two-way disjuncture, not a single-sided deficit. <span className="italic">(Milton, 2012)</span>
+              </p>
+            </div>
+            
+            {/* Research 2 */}
+            <div className="border-l-2 border-indigo-500/30 pl-3">
+              <p className="text-[10px] text-slate-300 font-bold uppercase tracking-wider mb-0.5">Negative Interpretation Bias</p>
+              <p className="text-[9px] text-slate-500 leading-relaxed">
+                Mitigating the cognitive bias in social anxiety that defaults to interpreting ambiguity as hostile. <span className="italic">(Amir et al., 2009)</span>
+              </p>
+            </div>
+
+            {/* Research 3 */}
+            <div className="border-l-2 border-indigo-500/30 pl-3">
+              <p className="text-[10px] text-slate-300 font-bold uppercase tracking-wider mb-0.5">AI as a Social Prosthetic</p>
+              <p className="text-[9px] text-slate-500 leading-relaxed">
+                Utilizing generative models for real-time affective tracking and neurodivergent equity. 
+              </p>
+            </div>
+          </div>
+        </div>
+
       </div>
       
-      {/* Creator Credit */}
-      <div className="mt-2 pb-8 text-center w-full">
-        <p className="text-[10px] text-slate-600 font-mono tracking-widest uppercase">Engineered by Hafiz Wahid</p>
+      {/* Creator Credit & Legal Disclaimer */}
+      <div className="mt-2 pb-8 text-center w-full max-w-sm px-4">
+        <p className="text-[10px] text-slate-600 font-mono tracking-widest uppercase mb-4">
+          Engineered by Hafiz Wahid
+        </p>
+        <p className="text-[8px] text-slate-700 leading-tight">
+          Disclaimer: SubtextDecode is an AI-powered experimental tool designed for educational and communicative support. It is not a substitute for professional mental health advice, therapy, or medical diagnosis.
+        </p>
       </div>
     </main>
   );
